@@ -20,30 +20,30 @@ void createListRelasi(ListRelasi &LR) {
 // GROUP 
 // menambahkan group di awal list
 void insertFirstGroup(ListGroup &LG, int id, string nama) {
-    Group *g = new Group; // buat node baru
-    g->idGroup = id; // isi data id
-    g->namaGroup = nama; // isi data nama
-    g->next = LG.first; // hubungkan node baru ke node first lama
-    LG.first = g; // setel node baru sebagai node first
+    Group *g = new Group;
+    g->idGroup = id; 
+    g->namaGroup = nama; 
+    g->next = LG.first; 
+    LG.first = g; 
 }
 
 // mencari group berdasarkan id
 Group* findGroup(ListGroup LG, int id) {
-    Group *p = LG.first; // mulai dari node pertama
-    while (p != NULL) { // akan berhenti jika p = NULL
-        if (p->idGroup == id) // jika ketemu id yang dicari 
-            return p; // maka akan mengembalikan alamat node 
-        p = p->next; // lanjut ke node berikutnya
+    Group *p = LG.first; 
+    while (p != NULL) { 
+        if (p->idGroup == id)  
+            return p;
+        p = p->next; 
     }
-    return NULL; // jika tidak ketemu, kembalikan NULL
+    return NULL; 
 }
 
 // menghapus group berdasarkan id
 void deleteGroup(ListGroup &LG, ListRelasi &LR, int id) {
     //mencari group yang akan dihapus
-    Group *p = LG.first, *prev = NULL; // mulai dari node pertama dan node sebelumnya di set NULL
+    Group *p = LG.first, *prev = NULL; 
 
-    while (p != NULL && p->idGroup != id) { // terus jalan jika p tidak NULL dan id tidak ketemu
+    while (p != NULL && p->idGroup != id) { 
         prev = p; // set prev ke p
         p = p->next; // lanjut ke node berikutnya
     }
