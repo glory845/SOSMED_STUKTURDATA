@@ -23,7 +23,7 @@ struct Relasi {
     Relasi *next;
 };
 
-// LIST 
+// LIST DATA
 struct ListGroup {
     Group *first;
 };
