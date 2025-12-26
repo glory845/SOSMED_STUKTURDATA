@@ -83,131 +83,130 @@ void showGroup(ListGroup LG) {
 
 
 //NETIZEN 
-
 // menambahkan netizen di akhir list
 void insertLastNetizen(ListNetizen &LN, int id, string nama) {
-    Netizen *n = new Netizen; // buat node baru
-    n->idNetizen = id; // isi data id
-    n->nama = nama; // isi data nama
-    n->next = NULL; // karena di akhir, next di set NULL
+    Netizen *n = new Netizen; 
+    n->idNetizen = id; 
+    n->nama = nama; 
+    n->next = NULL; 
 
-    if (LN.first == NULL) { // jika list kosong
-        LN.first = n; // node baru menjadi node pertama
+    if (LN.first == NULL) { 
+        LN.first = n; 
     } else {
-        Netizen *p = LN.first; // pointer p mulai dari node pertama
-        while (p->next != NULL) // cari node terakhir
-            p = p->next; // lanjut ke node berikutnya
-        p->next = n; // hubungkan node terakhir ke node baru
+        Netizen *p = LN.first;
+        while (p->next != NULL) 
+            p = p->next; 
+        p->next = n;
     }
 }
 
 // mencari netizen berdasarkan id
 Netizen* findNetizen(ListNetizen LN, int id) { 
-    Netizen *p = LN.first; // mulai dari node pertama
-    while (p != NULL) { // selama p tidak NULL
-        if (p->idNetizen == id) // jika ketemu id yang dicari
-            return p; // kembalikan p
-        p = p->next; // lanjut ke node berikutnya
+    Netizen *p = LN.first; 
+    while (p != NULL) { 
+        if (p->idNetizen == id)
+            return p; 
+        p = p->next;
     }
-    return NULL; // jika tidak ketemu, kembalikan NULL
+    return NULL; 
 }
 
 // menghapus netizen berdasarkan id
 void deleteNetizen(ListNetizen &LN, ListRelasi &LR, int id) {
     //mencari netizen yang akan dihapus
-    Netizen *p = LN.first, *prev = NULL; // mulai dari node pertama dan node sebelumnya di set NULL
-    while (p != NULL && p->idNetizen != id) { // terus jalan jika p tidak NULL dan id tidak ketemu
-        prev = p; // set prev ke p
-        p = p->next; // lanjut ke node berikutnya
+    Netizen *p = LN.first, *prev = NULL; 
+    while (p != NULL && p->idNetizen != id) { 
+        prev = p; 
+        p = p->next; 
     }
     //hapus node netizen jika ketemu
-    if (p != NULL) { // jika p tidak NULL (ketemu)
-        if (prev == NULL) //jika prev NULL, berarti yang dihapus adalah node pertama
-            LN.first = p->next; // set first ke node berikutnya
+    if (p != NULL) {
+        if (prev == NULL) 
+            LN.first = p->next; 
         else
-            prev->next = p->next; // lewati node p
+            prev->next = p->next; 
 
         // hapus relasi
-        Relasi *r = LR.first, *pr = NULL; // mulai dari node pertama relasi dan node sebelumnya di set NULL
-        while (r != NULL) { // selama r tidak NULL
-            if (r->netizen == p) { // jika netizen pada relasi sama dengan netizen yang dihapus
-                if (pr == NULL) // jika pr NULL, berarti yang dihapus adalah node pertama
-                    LR.first = r->next; // set first ke node berikutnya
+        Relasi *r = LR.first, *pr = NULL; 
+        while (r != NULL) { 
+            if (r->netizen == p) {
+                if (pr == NULL) 
+                    LR.first = r->next;
                 else
-                    pr->next = r->next; // lewati node r
+                    pr->next = r->next; 
             } else {
-                pr = r; // jika tidak sama, lanjutkan
+                pr = r; 
             }
-            r = r->next; // lanjut ke node berikutnya
+            r = r->next; 
         }
-        delete p; // hapus node netizen
+        delete p; 
     }
 }
 
 // menampilkan semua netizen
 void showNetizen(ListNetizen LN) { 
-    Netizen *p = LN.first; // mulai dari node pertama
-    while (p != NULL) { // selama p tidak NULL
-        cout << "ID: " << p->idNetizen // tampilkan id netizen
-             << " | Nama: " << p->nama << endl; // tampilkan nama netizen
-        p = p->next; // lanjut ke node berikutnya
+    Netizen *p = LN.first; 
+    while (p != NULL) { 
+        cout << "ID: " << p->idNetizen 
+             << " | Nama: " << p->nama << endl; 
+        p = p->next;
     }
 }
 
 // RELASI 
 // menambahkan relasi antara netizen dan group
 void addRelasi(ListRelasi &LR, Group *g, Netizen *n) {
-    Relasi *r = new Relasi; // buat node relasi baru
-    r->group = g; // isi data group
-    r->netizen = n; // isi data netizen
-    r->next = LR.first; // hubungkan node baru ke node first lama
-    LR.first = r; // setel node baru sebagai node first
+    Relasi *r = new Relasi; 
+    r->group = g; 
+    r->netizen = n; 
+    r->next = LR.first; 
+    LR.first = r; 
 }
 
 // menampilkan semua group beserta anggotanya
 void showAllGroupWithMember(ListGroup LG, ListRelasi LR) {
-    Group *g = LG.first; // mulai dari node pertama group
-    while (g != NULL) { // selama g tidak NULL
-        cout << g->namaGroup << " : "; // tampilkan nama group
-        Relasi *r = LR.first; // mulai dari node pertama relasi
-        while (r != NULL) { // selama r tidak NULL
-            if (r->group == g) // jika group pada relasi sama dengan group saat ini
-                cout << r->netizen->nama << ", "; // maka tampilkan nama netizen
-            r = r->next; // lanjut ke node relasi berikutnya
+    Group *g = LG.first; 
+    while (g != NULL) {
+        cout << g->namaGroup << " : ";
+        Relasi *r = LR.first; 
+        while (r != NULL) { 
+            if (r->group == g) 
+                cout << r->netizen->nama << ", "; 
+            r = r->next; 
         }
-        cout << endl; // ganti baris setelah menampilkan semua anggota group
-        g = g->next; // lanjut ke node group berikutnya
+        cout << endl;
+        g = g->next; 
     }
 }
 
 // menampilkan semua group yang berelasi dengan netizen
 void showGroupByNetizen(ListRelasi LR, int idNetizen) {
-    Relasi *r = LR.first; // mulai dari node pertama relasi
-    while (r != NULL) { // selama r tidak NULL
-        if (r->netizen->idNetizen == idNetizen) // jika netizen pada relasi sama dengan idNetizen yang dicari
-            cout << r->group->namaGroup << endl; // maka akan menampilkan nama group
-        r = r->next; // lanjut ke node relasi berikutnya
+    Relasi *r = LR.first;
+    while (r != NULL) { 
+        if (r->netizen->idNetizen == idNetizen) 
+            cout << r->group->namaGroup << endl; 
+        r = r->next; 
     }
 }
 
 // menampilkan semua netizen yang berelasi dengan group
 void showNetizenInGroup(ListRelasi LR, int idGroup) {
-    Relasi *r = LR.first; // mulai dari node pertama relasi
-    while (r != NULL) { // selama r tidak NULL
-        if (r->group->idGroup == idGroup) // jika group pada relasi sama dengan idGroup yang dicari
-            cout << r->netizen->nama << endl; // maka akan menampilkan nama netizen
-        r = r->next; // lanjut ke node relasi berikutnya
+    Relasi *r = LR.first; 
+    while (r != NULL) { 
+        if (r->group->idGroup == idGroup) 
+            cout << r->netizen->nama << endl;
+        r = r->next; 
     }
 }
 
 // menghitung jumlah anggota dalam sebuah group
 int countMember(ListRelasi LR, int idGroup) {
-    int count = 0; // inisialisasi penghitung
-    Relasi *r = LR.first; // mulai dari node pertama relasi
-    while (r != NULL) { // selama r tidak NULL
-        if (r->group->idGroup == idGroup) // jika group pada relasi sama dengan idGroup yang dicari
-            count++; // tambahkan penghitung
-        r = r->next; // lanjut ke node relasi berikutnya
+    int count = 0;
+    Relasi *r = LR.first;
+    while (r != NULL) { 
+        if (r->group->idGroup == idGroup) 
+            count++; 
+        r = r->next; 
     }
-    return count; // kembalikan jumlah anggota
+    return count;
 }
