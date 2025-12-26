@@ -44,40 +44,40 @@ void deleteGroup(ListGroup &LG, ListRelasi &LR, int id) {
     Group *p = LG.first, *prev = NULL; 
 
     while (p != NULL && p->idGroup != id) { 
-        prev = p; // set prev ke p
-        p = p->next; // lanjut ke node berikutnya
+        prev = p; 
+        p = p->next; 
     }
     //hapus node group jika ketemu
-    if (p != NULL) { // jika p tidak NULL (ketemu)
-        if (prev == NULL) //jika prev NULL, berarti yang dihapus adalah node pertama
-            LG.first = p->next; // set first ke node berikutnya
+    if (p != NULL) {
+        if (prev == NULL)
+            LG.first = p->next; 
         else
-            prev->next = p->next; // lewati node p
+            prev->next = p->next; 
 
         // hapus relasi
-        Relasi *r = LR.first, *pr = NULL; // mulai dari node pertama relasi dan node sebelumnya di set NULL
-        while (r != NULL) { // selama r tidak NULL
-            if (r->group == p) { // jika group pada relasi sama dengan group yang dihapus
-                if (pr == NULL) // jika pr NULL, berarti yang dihapus adalah node pertama
-                    LR.first = r->next; // set first ke node berikutnya
+        Relasi *r = LR.first, *pr = NULL; 
+        while (r != NULL) { 
+            if (r->group == p) { 
+                if (pr == NULL) 
+                    LR.first = r->next; 
                 else
-                    pr->next = r->next; // lewati node r
-            } else { // jika tidak sama, lanjutkan
-                pr = r; // set pr ke r
+                    pr->next = r->next; 
+            } else { 
+                pr = r;
             }
-            r = r->next; // lanjut ke node berikutnya
+            r = r->next; 
         }
-        delete p; // hapus node group
+        delete p; 
     }
 }
 
 // menampilkan semua group
 void showGroup(ListGroup LG) {
-    Group *p = LG.first; // mulai dari node pertama
-    while (p != NULL) { // selama p tidak NULL akan terus berjalan
-        cout << "ID: " << p->idGroup // tampilkan id group
-             << " | Nama Group: " << p->namaGroup << endl; // tampilkan nama group
-        p = p->next; // lanjut ke node berikutnya
+    Group *p = LG.first; 
+    while (p != NULL) { 
+        cout << "ID: " << p->idGroup 
+             << " | Nama Group: " << p->namaGroup << endl;
+        p = p->next;
     }
 }
 
